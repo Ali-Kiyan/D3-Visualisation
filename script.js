@@ -11,7 +11,7 @@ d3.queue()
       countryCode: row["Country Code"],
       emissions: +row["Emissions"],
       emmission: +row["Emissions"],
-      emissionPerCapita: +row["Emissions Per Capita"],
+      emissionsPerCapita: +row["Emissions Per Capita"],
       region: row.Region,
       year: +row.Year
     }
