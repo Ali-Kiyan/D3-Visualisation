@@ -22,13 +22,17 @@ d3.queue()
     var currentYear = extremeYears[0];
     var currentDataType = d3.select('input[name="data-type"]:checked')
                           .attr("value");
-    var geoData = topojson.feature(mapData, mapData.objects.countires).features;
+    var geoData = topojson.feature(mapData, mapData.objects.countries).features;
     var width = +d3.select(".chart-container")
                   .node().offsetWidth;
                   //only require width and height
+    var height = 300;
+
     createMap(width, width * 4 / 5);
+    createPie(width, height);
     //require both dataset as well as the current year and the current data type
     drawMap(geoData, data, currentYear, currentDataType);
+    drawPie(data, currentYear);
 
     d3.select("#year")
       .property("min", currentYear )
@@ -37,6 +41,7 @@ d3.queue()
       .on("input", () => {
         currentYear = +d3.event.target.value;
         drawMap(geoData, data, currentYear, currentDataType);
+        drawPie(data, currentYear);
       });
       d3.selectAll('input[name="data-type"]')
         .on("change", () => {
