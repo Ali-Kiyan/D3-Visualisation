@@ -7,7 +7,7 @@ d3.queue()
   .defer(d3.csv, "./data/all_data.csv", function(row) {
     return {
       continent: row.Continent,
-      country: row.Contry,
+      country: row.Country,
       countryCode: row["Country Code"],
       emissions: +row["Emissions"],
       emmission: +row["Emissions"],
@@ -16,6 +16,7 @@ d3.queue()
       year: +row.Year
     }
   })
+
   .await(function(error, mapData, data){
     if(error) throw error;
     var extremeYears = d3.extent(data, d => d.year);
