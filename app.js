@@ -71,8 +71,12 @@ d3.queue()
                             .property("value");
           var units = dataType === "emissions" ? "thousand metric tons" : "metric tons per capita";
           var data;
+          var percentage = "";
           if (isCountry) data = tgt.data()[0].properties;
-          if (isArc) data = tgt.data()[0].data;
+          if (isArc){
+            data = tgt.data()[0].data;
+            percentage = `<p>Percentage of total: ${getPercentage(tgt.data()[0])}</p>`;
+          }
           if (isBar) data = tgt.data()[0];
           tooltip
               .style("opacity", +(isCountry || isArc || isBar))
@@ -84,9 +88,21 @@ d3.queue()
             tooltip
                .html(`
                  <p>Country: ${data.country}</p>
-                  <p>${dataType}: ${dataValue}</p>
+                  <p>${formatDataType(dataType)}: ${dataValue}</p>
                   <p>Year: ${data.year || d3.select("#year").property("value")}</p>
+                  ${percentage}
                  `)
           }
         }
   });
+//helper functions
+//nice format
+function formatDataType(key) {
+  return key[0].toUpperCase() + key.slice(1).replace(/[A-Z]/g, c => " " + c);
+}
+//calculate the difference between two angles
+function getPercentage(d) {
+  var angle = d.endAngle - d.startAngle;
+  var fraction = 100 * angle / (Math.PI * 2);
+  return fraction.toFixed(2) + "%";
+}
