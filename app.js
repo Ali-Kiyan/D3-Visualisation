@@ -18,7 +18,7 @@ d3.queue()
   })
   .await(function(error, mapData, data){
     if(error) throw error;
-    var extremeYears = d3.extent(data, d=> d.year);
+    var extremeYears = d3.extent(data, d => d.year);
     var currentYear = extremeYears[0];
     var currentDataType = d3.select('input[name="data-type"]:checked')
                           .attr("value");
@@ -30,22 +30,25 @@ d3.queue()
 
     createMap(width, width * 4 / 5);
     createPie(width, height);
-    createBar(data, currentDataType, "");
+    createBar(width, height);
 
     //require both dataset as well as the current year and the current data type
     drawMap(geoData, data, currentYear, currentDataType);
     drawPie(data, currentYear);
+    drawBar(data, currentDataType, "");
+
+
 
     d3.select("#year")
-      .property("min", currentYear )
-      .property("max", extremeYears[1])
-      .property("value", currentYear)
-      .on("input", () => {
-        currentYear = +d3.event.target.value;
-        drawMap(geoData, data, currentYear, currentDataType);
-        drawPie(data, currentYear);
-        highlightBars(currentYear);
-      });
+        .property("min", currentYear)
+        .property("max", extremeYears[1])
+        .property("value", currentYear)
+        .on("input", () => {
+          currentYear = +d3.event.target.value;
+          drawMap(geoData, data, currentYear, currentDataType);
+          drawPie(data, currentYear);
+          highlightBars(currentYear);
+        });
       d3.selectAll('input[name="data-type"]')
         .on("change", () => {
           var active = d3.select(".active").data()[0];

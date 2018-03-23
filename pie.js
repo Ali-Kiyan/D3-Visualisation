@@ -1,7 +1,7 @@
 function createPie(width, height) {
   var pie = d3.select("#pie")
                 .attr("width", width)
-                .attr('height', height);
+                .attr("height", height);
   pie.append("g")
      .attr("transform", "translate(" + width / 2 + ", " + (height / 2 + 10) + ")")
      .classed("chart", true);
@@ -9,7 +9,7 @@ function createPie(width, height) {
      .attr("x", width / 2)
      .attr("y", "1em")
      .attr("font-size", "1.5em")
-     .style("text-achor", "middle")
+     .style("text-anchor", "middle")
      .classed("pie-title", true);
 }
 function drawPie(data, currentYear) {
@@ -52,5 +52,5 @@ function drawPie(data, currentYear) {
       .attr("fill", d => colorScale(d.data.continent))
       .attr("d", path);
   pie.select(".pie-title")
-     .text("Total emission by continent and rangion, " + currentYear);
+     .text("Total emission by continent and region, " + currentYear);
 }
